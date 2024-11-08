@@ -1,0 +1,14 @@
+*.class
+.vscode/
+.vscode
+/.vscode
+/bin/
+/target/
+*.classpath
+/.project
+/.settings/
+target/
+/target/
+celestialcataclysm/target/
+*.lst
+.lst
