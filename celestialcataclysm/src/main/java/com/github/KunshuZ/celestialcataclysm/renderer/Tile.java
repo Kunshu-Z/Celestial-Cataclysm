@@ -11,6 +11,30 @@ import com.github.KunshuZ.celestialcataclysm.utils.Assets;
 public abstract class Tile extends JComponent {
     abstract ImageIcon img();
     int x, y;
+
+    //Screen settings
+    final int originalTileSize = 16;
+    final int scale = 3;
+
+    final int tileSize = originalTileSize * scale; //To produce a 48x48 tile effect
+    final int maxScreenCol = 16;
+    final int maxScreenRow = 12;
+    final int screenWidth = tileSize * maxScreenCol;
+    final int screenHeight = tileSize * maxScreenRow; 
+
+    Thread gameThread;
+
+    public Tile() {
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setBackground(Color.BLACK);
+        this.setDoubleBuffered(true);
+    }
+
+    public void startGameThread() {
+        gameThread = new Thread();
+        gameThread.start();
+    }
+    
     @Override public Dimension getPreferredSize() {
         return new Dimension(10, 10);
     }
