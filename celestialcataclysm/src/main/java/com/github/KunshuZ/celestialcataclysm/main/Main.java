@@ -2,12 +2,10 @@ package com.github.KunshuZ.celestialcataclysm.main;
 import javax.swing.*;
 import java.awt.*;
 import com.github.KunshuZ.celestialcataclysm.renderer.Window;
-import com.github.KunshuZ.celestialcataclysm.renderer.Tile;
 
 
 public class Main {
     public static void main(String[] args){
         SwingUtilities.invokeLater(Window::init); //run/compute Window.display() on the rendering thread 
-        SwingUtilities.invokeLater(()->Window.add(new Tile.GrassTile(0,0), BorderLayout.CENTER)); 
     }
 }

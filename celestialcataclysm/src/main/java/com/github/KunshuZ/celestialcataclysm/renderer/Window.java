@@ -6,7 +6,7 @@ import java.awt.*;
 
 
 public class Window{
-    private static JFrame window = new JFrame();
+    static JFrame window = new JFrame();
     
 
     public static JFrame init() {
@@ -26,6 +26,14 @@ public class Window{
         window.repaint();
         return t;
     }
+
+    public static <T extends JComponent> T add(T t){
+        window.add(t);
+        window.revalidate();
+        window.repaint();
+        return t;
+    }
+
 }
 
 
