@@ -3,34 +3,35 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 
-public class Window{
-    static JFrame window = new JFrame();
-    
+public class Window extends JFrame{
+    static JFrame frame = new JFrame();
+    static Canvas canvas = new Canvas();
+    static int height = 800;
+    static int width = 800;
 
     public static JFrame init() {
-        window = new JFrame();
-        window.setTitle("Celestial Cataclysm");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(800, 600);
-        window.setVisible(true);
+        frame = new JFrame();
 
-        return window;
-    }
-
-
-    public static <T extends JComponent> T add(T t, Object how){
-        window.add(t, how);
-        window.revalidate();
-        window.repaint();
-        return t;
+        canvas.setPreferredSize(new Dimension(height, width));
+        canvas.setFocusable(false);
+        
+        frame.add(canvas);
+        frame.setTitle("Celestial Cataclysm");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(height, width);
+        frame.setResizable(false);
+        frame.setVisible(true);
+        return frame;
     }
 
     public static <T extends JComponent> T add(T t){
-        window.add(t);
-        window.revalidate();
-        window.repaint();
+        frame.add(t);
+        frame.revalidate();
+        frame.repaint();
         return t;
     }
 

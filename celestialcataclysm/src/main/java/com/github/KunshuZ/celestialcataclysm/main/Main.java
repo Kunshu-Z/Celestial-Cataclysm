@@ -6,6 +6,6 @@ import com.github.KunshuZ.celestialcataclysm.renderer.Window;
 
 public class Main {
     public static void main(String[] args){
-        SwingUtilities.invokeLater(Window::init); //run/compute Window.display() on the rendering thread 
+        SwingUtilities.invokeLater(Game::new); //run/compute Window.display() on the rendering thread 
     }
 }
