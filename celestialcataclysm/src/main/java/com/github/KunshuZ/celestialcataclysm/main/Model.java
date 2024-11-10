@@ -7,6 +7,6 @@ public interface Model {
     //TileMap tilemap();
     //List<Entity> entities();  
     //List<Interactable> interactable();
+    default void ping(){}
 }
 
-interface Scene extends Model{}

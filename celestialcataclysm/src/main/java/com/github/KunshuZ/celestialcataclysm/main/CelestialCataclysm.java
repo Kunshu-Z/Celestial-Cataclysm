@@ -1,5 +1,5 @@
 package com.github.KunshuZ.celestialcataclysm.main;
 
-public class View {
+public class CelestialCataclysm extends Game {
     
 }
