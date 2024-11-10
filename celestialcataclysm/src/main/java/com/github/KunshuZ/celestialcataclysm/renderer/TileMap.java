@@ -17,4 +17,13 @@ public class TileMap {
     public TileType getTile(int y, int x) {
         return tilemap.get(y).get(x);
     }
+    public int height() {
+        return tilemap.size();
+    }
+    public int width() {
+        return tilemap.stream()
+            .mapToInt(list -> list.size())
+            .max()
+            .orElse(0);
+        }
 }

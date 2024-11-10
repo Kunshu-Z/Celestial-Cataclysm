@@ -8,22 +8,12 @@ import javax.swing.SwingUtilities;
 import com.github.KunshuZ.celestialcataclysm.renderer.TileType;
 import com.github.KunshuZ.celestialcataclysm.renderer.Window;
 
-public class Game {
-    List<List<TileType>> tilemap = new ArrayList<>();
+public abstract class Game {
     public Game(){
         start();
     }
 
-    public void start(){
-        Window.init();
-        assert SwingUtilities.isEventDispatchThread();
-
-        // boolean running = true;
-        // while(running){
-
-        // }
-    }
-
+    public abstract void start();
 
 
 }

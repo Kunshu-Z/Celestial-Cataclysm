@@ -1,11 +1,14 @@
 package com.github.KunshuZ.celestialcataclysm.main;
+import com.github.KunshuZ.celestialcataclysm.renderer.Window;
 import javax.swing.*;
 import java.awt.*;
-import com.github.KunshuZ.celestialcataclysm.renderer.Window;
-
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args){
-        SwingUtilities.invokeLater(CelestialCataclysm::new); //run/compute Window.display() on the rendering thread 
+        Stream.of("")
+            .forEach(i -> {
+                SwingUtilities.invokeLater(CelestialCataclysm::new); //computation in the rendering thread
+        });
     }
 }
