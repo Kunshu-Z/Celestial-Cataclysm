@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 
 
 public class Window extends JFrame{
-    public static int width = 800;
-    public static int height = 800;
+    public static int width = ((5*3)+1)*48;
+    public static int height = ((5*3)+1)*48;
     public static JFrame frame;
     public static View view;
 

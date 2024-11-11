@@ -11,13 +11,15 @@ import java.awt.Color;
 
 
 public enum Tile {
-    GRASS("/tiles/Grass-flat_large.png", true),
-    WATER("/tiles/Water-01_large.png", true),
-    DIRT("/tiles/Ridge-04_large.png", true),
-    CHARA("/sprites/overworld/character/chara_frount.png", true);
+    BLANK(-1, "/tiles/Water-01_large.png", true),
+    GRASS(0, "/tiles/Grass-flat_large.png", true),
+    WATER(1,"/tiles/Water-01_large.png", true),
+    DIRT(2,"/tiles/Ridge-04_large.png", true),
+    CHARA(3,"/sprites/overworld/character/chara_frount.png", true);
 
     private final String src;
     private final boolean walkable;
+    int id;
 
     static final int originalTileSize = 16;
     static final int scale = 3;
@@ -27,9 +29,19 @@ public enum Tile {
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow; 
 
-    private Tile(String src, boolean walkable) {
+    private Tile(int id, String src, boolean walkable) {
+        this.id = id;
         this.src = src;
         this.walkable = walkable;
+    }
+
+    public static Tile fromId(int id) {
+        for (Tile t : Tile.values()) {
+            if (t.id == id) {
+                return t;
+            }
+        }
+        return BLANK;
     }
 
     public static JPanel panel(int x, int y, Tile tileType) {
@@ -40,9 +52,6 @@ public enum Tile {
                 g2d.drawImage(tileType.img(), 0, 0, tileSize, tileSize, null);
             }
             
-            @Override public Dimension getPreferredSize() {
-                return new Dimension(10, 10);
-            }
             {
                 this.setPreferredSize(new Dimension(Window.width, Window.height));
                 this.setBackground(Color.BLACK);

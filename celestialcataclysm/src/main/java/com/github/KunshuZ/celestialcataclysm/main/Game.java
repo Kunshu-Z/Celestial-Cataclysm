@@ -30,41 +30,31 @@ class CelestialCataclysm extends Game {
 
         assert SwingUtilities.isEventDispatchThread(); //make sure the current thread is the event dispatch thread
 
-        /**
-         * place holder tile map
-         */
-        TileMap map = new TileMap(new int[][]{
-            {0, 0, 0, 0, 1, 1, 1, 1},
-            {0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 2, 2, 1, 1, 1},
-            {1, 1, 1, 2, 2, 1, 1, 1}
-        });
+
         
         //nested loop over 2d array of tiles and adding them to the window
-        IntStream.range(0, map.height()).forEach(y ->
-            IntStream.range(0, map.width()).forEach(x -> {
-                var tileType = map.getTile(y, x);
-                var tilePanel = Tile.panel(x, y, tileType);
-                Window.add(tilePanel);
-            })
-        );
+        // IntStream.range(0, map.height()).forEach(y ->
+        //     IntStream.range(0, map.width()).forEach(x -> {
+        //         var tileType = map.getTile(y, x);
+        //         var tilePanel = Tile.panel(x, y, tileType);
+        //         Window.add(tilePanel);
+        //     })
+        // );
+
+        Window.view.render();
         
-        JPanel characterTile = Tile.panel(2, 2, Tile.CHARA);
 
-        Window.add(characterTile, Integer.valueOf(1));
-
-        Camera c = new Camera(2,2);
 
 
         //main game loop
         int[] tick = {0};
-        Timer timer = new Timer(30, e->{
+        Timer timer = new Timer(1130, e -> {
             tick[0]++;
             Window.ping();
             System.out.println("tick: " + tick[0]);
-
+            ((Timer) e.getSource()).stop(); // Stop the timer after the first tick
         });
+        timer.setRepeats(false); // Ensure the timer only ticks once
         timer.start();
     }
 }

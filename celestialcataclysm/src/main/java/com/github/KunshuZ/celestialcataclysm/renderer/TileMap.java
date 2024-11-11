@@ -10,11 +10,14 @@ public class TileMap {
         for (int i = 0; i < tilemap.length; i++) {
             this.tilemap.add(new ArrayList<>());
             for (int j = 0; j < tilemap[i].length; j++) {
-                this.tilemap.get(i).add(Tile.values()[tilemap[i][j]]);
+                this.tilemap.get(i).add(Tile.fromId(tilemap[i][j]));
             }
         }
     }
     public Tile getTile(int y, int x) {
+        if (y < 0 || y >= tilemap.size() || x < 0 || x >= tilemap.get(y).size()) 
+            return Tile.BLANK;
+        
         return tilemap.get(y).get(x);
     }
     public int height() {
