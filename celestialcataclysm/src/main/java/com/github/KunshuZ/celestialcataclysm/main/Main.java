@@ -6,9 +6,6 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args){
-        Stream.of("")
-            .forEach(i -> {
-                SwingUtilities.invokeLater(CelestialCataclysm::new); //computation in the rendering thread
-        });
+        SwingUtilities.invokeLater(CelestialCataclysm::new); //computation in the rendering thread
     }
 }
