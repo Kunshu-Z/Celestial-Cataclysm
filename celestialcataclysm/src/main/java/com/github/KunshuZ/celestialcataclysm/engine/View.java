@@ -8,89 +8,49 @@ import java.util.stream.IntStream;
 public interface View {
     JComponent panel();
     void render();
-    default void add(JComponent component, Object how){
-        panel().add(component, how);
-    }
-    default void add(JComponent component){
-        add(component, null);
-    }
-
-
-    
-    public static View OverWorldView(){
-        return new OverWorldView();
-    }
-    public static View NullView(){
-        return new NullView();
-    }
+    default void add(JComponent component, Object how){panel().add(component, how);}
+    default void add(JComponent component){add(component, null);}
+    public static View Overworld(TileMap tileMap, Camera camera){return new OverworldView(tileMap, camera);}
 }
 
-class OverWorldView implements View {
+class OverworldView implements View {
     JComponent panel;
-    int width = (5*3) +1;
-    int height = width;
-    TileMap tileMap = new TileMap(new int[][]{
-        {0, 0, 0, 0, 1, 1, 1, 1},
-        {0, 0, 0, 0, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 2, 2, 1, 1, 1},
-        {1, 1, 1, 2, 2, 1, 1, 1}
-    });
+    int aspect = (5*3) +1;
+    int width = aspect;
+    int height = aspect;
+    TileMap tileMap;
+    Camera camera;
 
-    Camera camera = new Camera(1, 0);
-
-    {
+    public OverworldView(TileMap tileMap, Camera camera){
         assert width % 2 == 1 && height % 2 == 1 : "Width and height must be odd"; 
         panel = new JLayeredPane();
+        this.tileMap = tileMap;
+        this.camera = camera;
         panel.setLayout(null);        
     }
 
-    public JComponent panel() {
-        panel.setLayout(null);
-        return panel;
-    }
+    public JComponent panel() {return panel;}
 
     public void render(){
         panel.removeAll();
-
-
-
-        //center coords to the tile at  the center of the rendering window
-        int renderWindowCenterX = (width-1) / 2;
-        int renderWindowCenterY = (height-1) / 2;
-
-        //difference between the center of the rendering window and the camera
-        int offsetX = renderWindowCenterX - camera.x() ;
-        int offsetY = renderWindowCenterY -camera.y() ;
-
-        int fromX = 0 - offsetX;
-        int fromY = 0 - offsetY;
-        int toX = width - offsetX;
-        int toY = height - offsetY;
-
+        int centerX = (width-1)/2;
+        int centerY = (height-1)/2;
+        int offsetX = centerX - camera.x();
+        int offsetY = centerY -camera.y();
 
         IntStream.range(0, height).forEach(y ->
             IntStream.range(0, width).forEach(x -> {
                 var xid = x - offsetX;
                 var yid = y - offsetY;
-                System.out.println(x +", "+ y);
                 var tileType = tileMap.getTile(yid, xid);
-
-
-
                 var tilePanel = Tile.panel(x, y, tileType);
                 panel.add(tilePanel);
             })
         );
-        System.out.println("----------------------------------");
-        
-        // Add the character tile at the center of the rendering window
-        panel.add(Tile.panel(renderWindowCenterX, renderWindowCenterY, Tile.CHARA), Integer.valueOf(1));
 
+        panel.add(Tile.panel(centerX, centerY, Tile.CHARA), Integer.valueOf(1)); //add the character tile at the center of the rendering window
         panel.repaint();
-            
     }
-
 }
 
 
@@ -102,18 +62,3 @@ class NullView implements View {
     public void add(JComponent component) {}
     public void render() {}
 }
-
-interface GameMenuView extends View {
-
-}
-
-
-
-interface BattleView extends View {
-
-}
-
-interface DialogueView extends View {
-
-}
-

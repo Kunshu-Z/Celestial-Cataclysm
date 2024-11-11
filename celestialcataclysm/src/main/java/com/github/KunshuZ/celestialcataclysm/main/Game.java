@@ -6,6 +6,7 @@ import com.github.KunshuZ.celestialcataclysm.engine.View;
 import com.github.KunshuZ.celestialcataclysm.engine.Window;
 import com.github.KunshuZ.celestialcataclysm.engine.Camera;
 import com.github.KunshuZ.celestialcataclysm.engine.View;
+import com.github.KunshuZ.celestialcataclysm.engine.Controller;
 import java.util.List;
 import java.util.function.Function;
 import javax.swing.SwingUtilities;
@@ -14,6 +15,12 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.util.stream.IntStream;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
+import java.util.HashMap;
+import java.awt.event.KeyEvent;
+
+
 
 
 public abstract class Game {
@@ -24,37 +31,34 @@ public abstract class Game {
 }
 class CelestialCataclysm extends Game {
     public void start(){
-        
-        Window.init(); //initialize the main window for the program
-        Window.setView(View.OverWorldView());
-
         assert SwingUtilities.isEventDispatchThread(); //make sure the current thread is the event dispatch thread
 
-
-        
-        //nested loop over 2d array of tiles and adding them to the window
-        // IntStream.range(0, map.height()).forEach(y ->
-        //     IntStream.range(0, map.width()).forEach(x -> {
-        //         var tileType = map.getTile(y, x);
-        //         var tilePanel = Tile.panel(x, y, tileType);
-        //         Window.add(tilePanel);
-        //     })
-        // );
-
-        Window.view.render();
-        
-
-
+        var window = new Window("CelestialCataclysm");
+        TileMap tileMap = new TileMap(new int[][]{
+            {0, 0, 0, 0, 1, 1, 1, 1},
+            {0, 0, 0, 0, 1, 1, 1, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 1, 1, 2, 2, 1, 1, 1},
+            {1, 1, 1, 2, 2, 1, 1, 1}
+        });
+        Camera camera = new Camera(0, 0);
+        View overWorldView = View.Overworld(tileMap, camera);
+        window.setView(overWorldView);
+        Controller controller = new Controller(Map.of(
+            KeyEvent.VK_UP, () -> camera.move(0, -1),
+            KeyEvent.VK_DOWN, () -> camera.move(0, 1),
+            KeyEvent.VK_LEFT, () -> camera.move(-1, 0),
+            KeyEvent.VK_RIGHT, () -> camera.move(1, 0)
+        ));
+        window.addKeyListener(controller);
 
         //main game loop
-        int[] tick = {0};
-        Timer timer = new Timer(1130, e -> {
-            tick[0]++;
-            Window.ping();
-            System.out.println("tick: " + tick[0]);
-            ((Timer) e.getSource()).stop(); // Stop the timer after the first tick
+        AtomicInteger tick = new AtomicInteger(0);
+        Timer timer = new Timer(1000/30, e -> {
+            tick.incrementAndGet();
+            window.ping();
+            System.out.println("tick: " + tick.get());
         });
-        timer.setRepeats(false); // Ensure the timer only ticks once
         timer.start();
     }
 }

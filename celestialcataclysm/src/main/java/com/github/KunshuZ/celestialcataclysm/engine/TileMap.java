@@ -1,6 +1,7 @@
 package com.github.KunshuZ.celestialcataclysm.engine;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class TileMap {
     List<List<Tile>> tilemap;
@@ -13,6 +14,12 @@ public class TileMap {
                 this.tilemap.get(i).add(Tile.fromId(tilemap[i][j]));
             }
         }
+    }
+    public Tile getTile(int y, int x, Tile onDefault) {
+        if (y < 0 || y >= tilemap.size() || x < 0 || x >= tilemap.get(y).size()) 
+            return onDefault;
+        
+        return tilemap.get(y).get(x);
     }
     public Tile getTile(int y, int x) {
         if (y < 0 || y >= tilemap.size() || x < 0 || x >= tilemap.get(y).size()) 

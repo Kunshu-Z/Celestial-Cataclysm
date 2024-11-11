@@ -8,8 +8,6 @@ import java.util.Optional;
 import java.awt.Dimension;
 import java.awt.Color;
 
-
-
 public enum Tile {
     BLANK(-1, "/tiles/Water-01_large.png", true),
     GRASS(0, "/tiles/Grass-flat_large.png", true),
@@ -51,15 +49,10 @@ public enum Tile {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.drawImage(tileType.img(), 0, 0, tileSize, tileSize, null);
             }
-            
-            {
-                this.setPreferredSize(new Dimension(Window.width, Window.height));
-                this.setBackground(Color.BLACK);
-                this.setDoubleBuffered(true);
-                this.setOpaque(false);
-            }
         };
         p.setBounds(x*tileSize, y*tileSize, tileSize, tileSize);
+        p.setDoubleBuffered(true);
+        p.setOpaque(false);
         return p;
     }
 

@@ -8,42 +8,42 @@ import java.awt.event.KeyEvent;
 
 
 public class Window extends JFrame{
-    public static int width = ((5*3)+1)*48;
-    public static int height = ((5*3)+1)*48;
-    public static JFrame frame;
-    public static View view;
+    public static final int width = ((5*3)+1)*48;
+    public static final int height = ((5*3)+1)*48;
+    private JFrame frame;
+    private View view;
 
-    public static void init(){
+    public Window(String title){
         frame = new JFrame();
-        
-        frame.setTitle("Celestial Cataclysm");
+        frame.setTitle(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(height, width);
         frame.setResizable(false);
         frame.setVisible(true);
-
-        //content = new JLayeredPane();
-        //frame.setContentPane(content);
-        view = View.NullView();
+        view = new NullView();
     }
 
-    public static void setView(View view){
-        Window.view = view;
+    public void setView(View view){
+        this.view = view;
         frame.add(view.panel());
         frame.setContentPane(view.panel());
         frame.setLayout(null);
     }
 
-    public static void ping(){
+    public void ping(){
         frame.repaint();
         frame.revalidate();
+        view.render();
     }
 
-    public static <T extends JComponent> T add(T t, Object how){
+    public void addKeyListener(Controller controller){
+        frame.addKeyListener(controller);
+    }
+
+    public <T extends JComponent> T add(T t, Object how){
         view.add(t, how);
         ping();
         return t;
     }
-
-    public static <T extends JComponent> T add(T t){return add(t, null);}
+    public <T extends JComponent> T add(T t){return add(t, null);}
 }
