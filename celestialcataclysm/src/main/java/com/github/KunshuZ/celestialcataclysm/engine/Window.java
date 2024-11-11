@@ -1,4 +1,4 @@
-package com.github.KunshuZ.celestialcataclysm.renderer;
+package com.github.KunshuZ.celestialcataclysm.engine;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;

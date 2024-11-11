@@ -1,4 +1,4 @@
-package com.github.KunshuZ.celestialcataclysm.renderer;
+package com.github.KunshuZ.celestialcataclysm.engine;
 
 public class Camera {   
     int x;

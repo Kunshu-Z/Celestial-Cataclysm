@@ -1,4 +1,4 @@
-package com.github.KunshuZ.celestialcataclysm.renderer;
+package com.github.KunshuZ.celestialcataclysm.engine;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;

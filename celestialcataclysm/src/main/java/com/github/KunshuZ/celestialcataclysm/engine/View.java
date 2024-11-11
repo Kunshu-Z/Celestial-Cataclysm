@@ -1,4 +1,4 @@
-package com.github.KunshuZ.celestialcataclysm.renderer;
+package com.github.KunshuZ.celestialcataclysm.engine;
 import javax.swing.JPanel;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;

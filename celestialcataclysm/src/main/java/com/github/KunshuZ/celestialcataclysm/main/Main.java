@@ -1,5 +1,5 @@
 package com.github.KunshuZ.celestialcataclysm.main;
-import com.github.KunshuZ.celestialcataclysm.renderer.Window;
+import com.github.KunshuZ.celestialcataclysm.engine.Window;
 import javax.swing.*;
 import java.awt.*;
 import java.util.stream.Stream;

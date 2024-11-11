@@ -1,10 +1,10 @@
-package com.github.KunshuZ.celestialcataclysm.renderer;
+package com.github.KunshuZ.celestialcataclysm.engine;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.KunshuZ.celestialcataclysm.renderer.TileMap;
+import com.github.KunshuZ.celestialcataclysm.engine.TileMap;
 
 
 
