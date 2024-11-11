@@ -11,7 +11,7 @@ import com.github.KunshuZ.celestialcataclysm.renderer.TileMap;
 public class TileTest {
     public static void displayTile(){
         var tile = Tile.panel(0, 0, Tile.GRASS);
-        Window.init();
+        //Window.init();
         Window.add(tile);
     }    
 
@@ -23,7 +23,7 @@ public class TileTest {
             {1, 1, 1, 2, 2},
             {1, 1, 1, 2, 2}
         }).tilemap;
-        Window.init();
+        //Window.init();
         var window = Window.frame;
         var layeredPane = new JLayeredPane();
         window.setContentPane(layeredPane);
@@ -42,6 +42,13 @@ public class TileTest {
                 layeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
             }
         }
+
+        //draw player ontop of the tilemap
+        JPanel characterTile = Tile.panel(2, 2, Tile.CHARA);
+        layeredPane.add(characterTile, JLayeredPane.PALETTE_LAYER);
+        //make it transparent
+        characterTile.setOpaque(false);
+
         window.setVisible(true);
     }  
     

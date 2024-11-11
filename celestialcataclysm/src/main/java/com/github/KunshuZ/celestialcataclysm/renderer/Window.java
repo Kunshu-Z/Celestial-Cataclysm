@@ -6,42 +6,44 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-abstract class View extends JFrame{}
 
-public class Window extends View{
-    static int width = 800;
-    static int height = 800;
-    static JFrame frame = new JFrame();
+public class Window extends JFrame{
+    public static int width = 800;
+    public static int height = 800;
+    public static JFrame frame;
+    public static View view;
 
-    static JComponent content = new JLayeredPane();
-
-
-    public static JFrame init() {
+    public static void init(){
         frame = new JFrame();
-
+        
         frame.setTitle("Celestial Cataclysm");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(height, width);
         frame.setResizable(false);
         frame.setVisible(true);
 
-        frame.setContentPane(content);
-        frame.setLayout(null);
-
-        return frame;
+        //content = new JLayeredPane();
+        //frame.setContentPane(content);
+        view = View.NullView();
     }
 
-    public static <T extends JComponent> T add(T t){
-        content.add(t);
-        frame.revalidate();
-        frame.repaint();
-        return t;
+    public static void setView(View view){
+        Window.view = view;
+        frame.add(view.panel());
+        frame.setContentPane(view.panel());
+        frame.setLayout(null);
     }
 
     public static void ping(){
         frame.repaint();
+        frame.revalidate();
     }
 
+    public static <T extends JComponent> T add(T t, Object how){
+        view.add(t, how);
+        ping();
+        return t;
+    }
+
+    public static <T extends JComponent> T add(T t){return add(t, null);}
 }
-
-

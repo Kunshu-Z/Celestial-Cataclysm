@@ -34,11 +34,6 @@ public enum Tile {
 
     public static JPanel panel(int x, int y, Tile tileType) {
         var p = new JPanel(){
-            {
-                this.setPreferredSize(new Dimension(Window.width, Window.height));
-                this.setBackground(Color.BLACK);
-                this.setDoubleBuffered(true);
-            }
             @Override protected void paintComponent(java.awt.Graphics g){
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
@@ -47,6 +42,12 @@ public enum Tile {
             
             @Override public Dimension getPreferredSize() {
                 return new Dimension(10, 10);
+            }
+            {
+                this.setPreferredSize(new Dimension(Window.width, Window.height));
+                this.setBackground(Color.BLACK);
+                this.setDoubleBuffered(true);
+                this.setOpaque(false);
             }
         };
         p.setBounds(x*tileSize, y*tileSize, tileSize, tileSize);
