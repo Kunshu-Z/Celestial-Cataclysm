@@ -30,7 +30,10 @@ public class TileTest {
         });
         var window = new Window("");
         var camera = new Camera(0, 0);
-        window.setView(new OverworldView(tilemap, camera));
+
+
+
+        //window.setView(new OverworldView(tilemap, camera));
         
         // int tileSize = Tile.tileSize;    
         // for (int i = 0; i < tilemap.size(); i++) {

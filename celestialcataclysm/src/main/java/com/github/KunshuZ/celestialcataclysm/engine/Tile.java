@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.util.Optional;
 import java.awt.Dimension;
 import java.awt.Color;
+import java.util.Arrays;
 
 public enum Tile {
     BLANK(-1, "/tiles/Water-01_large.png", true),
@@ -18,14 +19,7 @@ public enum Tile {
     private final String src;
     private final boolean walkable;
     int id;
-
-    static final int originalTileSize = 16;
-    static final int scale = 3;
-    public static final int tileSize = originalTileSize * scale; //To produce a 48x48 tile effect
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow; 
+    public static final int tileSize = 16 * 3; 
 
     private Tile(int id, String src, boolean walkable) {
         this.id = id;
@@ -34,12 +28,11 @@ public enum Tile {
     }
 
     public static Tile fromId(int id) {
-        for (Tile t : Tile.values()) {
-            if (t.id == id) {
-                return t;
-            }
-        }
-        return BLANK;
+        return Arrays.stream(Tile.values())
+            .filter(tile -> tile.id == id)
+            .findFirst()
+            .orElse(BLANK);
+
     }
 
     public static JPanel panel(int x, int y, Tile tileType) {

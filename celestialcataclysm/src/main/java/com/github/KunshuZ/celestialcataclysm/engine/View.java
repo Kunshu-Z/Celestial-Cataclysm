@@ -4,16 +4,18 @@ import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.JLabel;
 import java.util.stream.IntStream;
+import java.awt.Graphics;
 
-public interface View {
-    JComponent panel();
-    void render();
-    default void add(JComponent component, Object how){panel().add(component, how);}
-    default void add(JComponent component){add(component, null);}
+public abstract class View extends JComponent{
+    abstract void render();
+    abstract JComponent panel();
+    //TODO: wrong and inconsistent due to overworld view compositing an inner panel. fix this 
+    void add(JComponent component, Object how){this.add(component, how);}
+    void add(JComponent component){this.add(component, null);}
     public static View Overworld(TileMap tileMap, Camera camera){return new OverworldView(tileMap, camera);}
 }
 
-class OverworldView implements View {
+class OverworldView extends View {
     JComponent panel;
     int aspect = (5*3) +1;
     int width = aspect;
@@ -26,9 +28,12 @@ class OverworldView implements View {
         panel = new JLayeredPane();
         this.tileMap = tileMap;
         this.camera = camera;
-        panel.setLayout(null);        
     }
 
+    @Override protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        panel.paint(g);
+    }
     public JComponent panel() {return panel;}
 
     public void render(){
@@ -54,11 +59,11 @@ class OverworldView implements View {
 }
 
 
-class NullView implements View {
-    JComponent panel = new JPanel();
-    {panel.add(new JLabel("sdasdadsaasdasdsa"));}
-    public JComponent panel() {return panel;}
-    public void add(JComponent component, Object how) {}
-    public void add(JComponent component) {}
-    public void render() {}
-}
+// class NullView implements View {
+//     JComponent panel = new JPanel();
+//     {panel.add(new JLabel("sdasdadsaasdasdsa"));}
+//     public JComponent panel() {return panel;}
+//     public void add(JComponent component, Object how) {}
+//     public void add(JComponent component) {}
+//     public void render() {}
+// }
