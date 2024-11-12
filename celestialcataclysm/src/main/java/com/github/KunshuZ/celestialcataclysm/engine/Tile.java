@@ -9,6 +9,11 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.util.Arrays;
 
+/**
+ * Tile enum defines the types of tiles on the overworld map.
+ * Each tile has an id, a source image, and a walkable boolean.
+ * static panel methods creates a JPanel to be rendered on the screen based on the tile type and position.
+ */
 public enum Tile {
     BLANK(-1, "/tiles/Water-01_large.png", true),
     GRASS(0, "/tiles/Grass-flat_large.png", true),

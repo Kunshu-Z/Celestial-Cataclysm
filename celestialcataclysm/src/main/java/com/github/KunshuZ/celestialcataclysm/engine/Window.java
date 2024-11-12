@@ -13,6 +13,10 @@ import java.util.stream.IntStream;
 import java.util.Collections;
 import java.util.Arrays;
 
+/**
+ * An object that represents the main window of the game by being a JFrame.
+ * What is being rendered on the window is determined by the current scene.
+ */
 public class Window extends JFrame{
     public static final int width = ((5*3)+1)*48;
     public static final int height = ((5*3)+1)*48;
@@ -66,20 +70,22 @@ public class Window extends JFrame{
     }
 }
 
+/**
+ * A stack of scenes/game states
+ * The top of the stack is the current scene
+ * 
+ */
 class SceneManager extends Stack<Scene> {
     public Stack<Scene> stateStack = new Stack<>();
     Scene currentScene = EmptyScene.INSTANCE;
 
     public SceneManager(Scene scene, Scene... scenes){
-
         List<Scene> sceneList = Arrays.asList(scenes);
         Collections.reverse(sceneList);
         for (Scene s : sceneList)
             this.push(s);
-
         this.currentScene = scene;
         this.push(scene);
-    
     }
     
     public Scene push(Scene scene){

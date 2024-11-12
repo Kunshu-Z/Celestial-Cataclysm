@@ -13,10 +13,10 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-
-
-
-
+/**
+ * Akin to scenes from Unity.
+ * A scene object is a game state that has a controller (defines key bindings) and a view (defines how the scene is rendered) as well as some state
+ */
 public interface Scene {
     Controller controller();
     View view();   
@@ -38,11 +38,18 @@ record OverworldScene(TileMap map, Camera camera, View view, Controller controll
             KeyEvent.VK_RIGHT, () -> camera.move(1, 0)
         ), Map.of()));
     }
-
-    public void ping(){
-        //view().render();
-    }
+    public void ping(){}
 }
+
+
+//Battle Scene
+
+//Menu Scene
+
+//Title/Main Menu Scene
+
+//Dialogue Scene
+
 
 enum EmptyScene implements Scene{
     INSTANCE;

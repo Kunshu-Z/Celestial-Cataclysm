@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * TileMap class represents the overworld map as a 2D grid of tiles.
+ */
 public class TileMap {
     List<List<Tile>> tilemap;
 

@@ -4,6 +4,11 @@ import java.awt.event.KeyListener;
 import java.util.Map;
 import java.util.Optional;
 import java.util.HashMap;
+
+/**
+ * Object that defines key bindings for a scene.
+ * Maps are key codes to actions. Actions are objects with a single method/function that will be ran when the key is pressed or released.
+ */
 public record Controller(Map<Integer, Runnable> onPress, Map<Integer, Runnable> onRelease) implements KeyListener{
     public Controller(){
         this(new HashMap<>(), new HashMap<>());

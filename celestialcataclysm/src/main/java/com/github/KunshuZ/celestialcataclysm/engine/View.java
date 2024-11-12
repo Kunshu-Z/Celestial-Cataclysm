@@ -6,6 +6,9 @@ import javax.swing.JLabel;
 import java.util.stream.IntStream;
 import java.awt.Graphics;
 
+/**
+ * Class that represents a what type of view is being rendered.
+ */
 public abstract class View extends JComponent{
     abstract void render();
     abstract JComponent panel();
@@ -15,6 +18,9 @@ public abstract class View extends JComponent{
     public static View Overworld(TileMap tileMap, Camera camera){return new OverworldView(tileMap, camera);}
 }
 
+/**
+ * Will render a view of the overworld based on a given tile map and camera.
+ */
 class OverworldView extends View {
     JComponent panel;
     int aspect = (5*3) +1;
@@ -42,16 +48,6 @@ class OverworldView extends View {
         int centerY = (height-1)/2;
         int offsetX = centerX - camera.x();
         int offsetY = centerY -camera.y();
-
-        // IntStream.range(0, height).forEach(y ->
-        //     IntStream.range(0, width).forEach(x -> {
-        //         var xid = x - offsetX;
-        //         var yid = y - offsetY;
-        //         var tileType = tileMap.getTile(yid, xid);
-        //         var tilePanel = Tile.panel(x, y, tileType);
-        //         panel.add(tilePanel);
-        //     })
-        // );
 
         IntStream.range(0, height).parallel().forEach(y ->
             IntStream.range(0, width).parallel().forEach(x -> {
