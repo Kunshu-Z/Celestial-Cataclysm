@@ -43,13 +43,21 @@ class OverworldView extends View {
         int offsetX = centerX - camera.x();
         int offsetY = centerY -camera.y();
 
-        IntStream.range(0, height).forEach(y ->
-            IntStream.range(0, width).forEach(x -> {
-                var xid = x - offsetX;
-                var yid = y - offsetY;
-                var tileType = tileMap.getTile(yid, xid);
+        // IntStream.range(0, height).forEach(y ->
+        //     IntStream.range(0, width).forEach(x -> {
+        //         var xid = x - offsetX;
+        //         var yid = y - offsetY;
+        //         var tileType = tileMap.getTile(yid, xid);
+        //         var tilePanel = Tile.panel(x, y, tileType);
+        //         panel.add(tilePanel);
+        //     })
+        // );
+
+        IntStream.range(0, height).parallel().forEach(y ->
+            IntStream.range(0, width).parallel().forEach(x -> {
+                var tileType = tileMap.getTile(y - offsetY, x - offsetX);
                 var tilePanel = Tile.panel(x, y, tileType);
-                panel.add(tilePanel);
+                synchronized (panel) {panel.add(tilePanel);}
             })
         );
 
@@ -57,13 +65,3 @@ class OverworldView extends View {
         panel.repaint();
     }
 }
-
-
-// class NullView implements View {
-//     JComponent panel = new JPanel();
-//     {panel.add(new JLabel("sdasdadsaasdasdsa"));}
-//     public JComponent panel() {return panel;}
-//     public void add(JComponent component, Object how) {}
-//     public void add(JComponent component) {}
-//     public void render() {}
-// }

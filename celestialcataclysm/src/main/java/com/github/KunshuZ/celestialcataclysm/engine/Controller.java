@@ -16,7 +16,5 @@ public record Controller(Map<Integer, Runnable> onPress, Map<Integer, Runnable> 
         e.consume();
         Optional.ofNullable(onRelease.get(e.getKeyCode())).ifPresent(r->r.run());
     }
-    public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported.");
-    }
+    public void keyTyped(KeyEvent e) {}
 }

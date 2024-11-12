@@ -26,7 +26,7 @@ public class CelestialCataclysm extends Game {
         
         Window window = new Window("CelestialCataclysm"); //main window for the progra,
 
-        Scene demo = new OverworldScene( //create a scene
+        Scene route1 = new OverworldScene( //create a scene
             new TileMap(new int[][]{
                 {0, 0, 0, 0, 1, 1, 1, 1},
                 {0, 0, 0, 0, 1, 1, 1, 1},
@@ -36,18 +36,37 @@ public class CelestialCataclysm extends Game {
             }),
             new Camera(0, 0)
         );
+        Scene route2 = new OverworldScene(
+            new TileMap(new int[][]{
+                {0, 0, 1, 1, 1, 1, 0, 0},
+                {0, 1, 1, 2, 2, 1, 1, 0},
+                {1, 1, 2, 3, 3, 2, 1, 1},
+                {1, 2, 3, 4, 4, 3, 2, 1},
+                {1, 2, 3, 4, 4, 3, 2, 1},
+                {1, 1, 2, 3, 3, 2, 1, 1},
+                {0, 1, 1, 2, 2, 1, 1, 0},
+                {0, 0, 1, 1, 1, 1, 0, 0}
+            }),
+            new Camera(2, 2)
+        );
 
-        Stack<Scene> stateStack = new Stack<>();
-        stateStack.push(demo);
-        window.setScene(demo);
+        SceneManager scenes = new SceneManager(route1);
+        scenes.push(route1);
 
-        //main game loop
+        window.setScene(scenes);
+
+        //main loop
         var tick = new AtomicInteger(0);
         Timer timer = new Timer(1000/30, e -> {
-            tick.incrementAndGet();
-            //window.ping();
-            demo.ping();
-            System.out.println("tick: " + tick.get());
+            window.ping();
+
+            if(tick.get() == 200){
+                scenes.push(route2);
+            }
+
+
+
+            System.out.println("tick: " + tick.incrementAndGet());
         });
         timer.start();
     }

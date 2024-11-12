@@ -1,17 +1,23 @@
 package com.github.KunshuZ.celestialcataclysm.engine;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
+import java.util.function.Supplier;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.Collections;
+import java.util.Arrays;
 
 public class Window extends JFrame{
     public static final int width = ((5*3)+1)*48;
     public static final int height = ((5*3)+1)*48;
-    private Scene scene;
-    private View view;
+    private Stack<Scene> scenes = new Stack<>();
+    private Scene currentScene;
 
     public Window(String title){
         super();
@@ -22,35 +28,92 @@ public class Window extends JFrame{
         this.setVisible(true);
     }
 
-    public void setScene(Scene scene){
-        this.scene = scene;
-        this.setView(scene.view());        
-    }
-
-    public void setView(View view){
-        this.view = view;
+    public void setScene(Stack<Scene> scenes){
+        this.scenes = scenes;
+        this.currentScene = scenes.peek();
+        var view = currentScene.view();
         this.add(view.panel());
         view.render();
         view.panel().setFocusable(true);
-        view.panel().addKeyListener(scene.controller());
     }
+
+    public void setScene(Scene scene) {
+        this.currentScene = scene;
+        getContentPane().removeAll();
+        JComponent panel = scene.view().panel();
+        getContentPane().add(panel);
+        revalidate();
+        repaint();
+        panel.setFocusable(true);
+        panel.requestFocusInWindow();
+    }
+
 
 
     public void ping(){
-        this.repaint();
+
+
+        if(currentScene != scenes.peek()){
+            
+            currentScene = scenes.peek();
+            this.setScene(currentScene);
+        }
         this.revalidate();
-        view.render();
+
+        this.repaint();
+        currentScene.view().render();
+        currentScene.view().panel().setFocusable(true);
+    }
+}
+
+class SceneManager extends Stack<Scene> {
+    public Stack<Scene> stateStack = new Stack<>();
+    Scene currentScene = EmptyScene.INSTANCE;
+
+    public SceneManager(Scene scene, Scene... scenes){
+
+        List<Scene> sceneList = Arrays.asList(scenes);
+        Collections.reverse(sceneList);
+        for (Scene s : sceneList)
+            this.push(s);
+
+        this.currentScene = scene;
+        this.push(scene);
+    
     }
     
-    /**
-     * puts too much importance on the window class
-     */
-    // public <T extends JComponent> T add(T t, Object how){
-    //     //this.add(t, how);
-    //     view.add(t, how);
-    //     return t;
-    // }
-    // public void setController(Controller controller){
-    //     this.addKeyListener(controller);        
-    // }
+    public Scene push(Scene scene){
+        stateStack.push(scene);
+        currentScene = stateStack.peek();
+        return scene;
+    }
+    public Scene pop(){
+        if(stateStack.isEmpty()) return EmptyScene.INSTANCE;
+        currentScene = stateStack.peek();
+        return stateStack.pop();
+    }
+    public Scene peek(){
+        if(stateStack.isEmpty()) return EmptyScene.INSTANCE;
+        var top = stateStack.peek();
+        return top;
+    }
+    public void remove(Scene scene){
+        stateStack.remove(scene);
+    }
+
+    public Scene get(){
+        return currentScene;
+    }
+
+    public void ping(){
+        currentScene.ping();
+    }
+
+    public void render(){
+        currentScene.view().render();
+    }
+
+    public void clear(){
+        stateStack.clear();
+    }
 }
